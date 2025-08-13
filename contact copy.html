@@ -109,7 +109,7 @@
 
     <div id="div2">
         <p>或截屏后通过支付宝扫码付款</p>
-        <img class="qr-image" src="cnm1.png" alt="二维码" id="qr-image">
+        <img class="qr-image" src="fall.png" alt="二维码" id="qr-image">
         <button onclick="reverseAnimateDivs()" style="display: none;">×</button>
     </div>
 
@@ -160,7 +160,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        const scheme = "alipay://nfc/app?id=10000007&actionType=route&codeContent=https%3A%2F%2Fqr.alipay.com%2Flpx18201ilb21qou7ulrtca%3FnoT%3Dnt00ez51zhjf";
+        const scheme = "alipay://nfc/app?id=10000007&actionType=route&codeContent=https%3A%2F%2Fqr.alipay.com";
         location.href = scheme;
         setTimeout(animateIn, 100);
     });
@@ -169,3 +169,4 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </body>
 </html>
+
