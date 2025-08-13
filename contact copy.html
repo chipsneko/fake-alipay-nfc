@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>通过支付宝支付</title>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #dce5ff, #ffffff);
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        color: #000;
+    }
+    /* 公共面板样式 */
+    #div1, #div2 {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 90%;
+        max-width: 300px;
+        padding: 20px;
+        transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    /* div2 初始隐藏状态 */
+    #div2 {
+        display: none;
+        opacity: 0;
+        transform: scale(1.1);
+        z-index: 1;
+        filter: blur(20px);
+    }
+    /* 按钮样式 */
+    #div1 button, #div2 button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 60px;
+        margin-top: 20px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: #000;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.1s cubic-bezier(0.22, 1, 0.36, 1), transform 0.1s;
+    }
+    /* div1 特定样式 */
+    #div1 {
+        align-items: flex-start;
+        text-align: center;
+        opacity: 0;
+        transform: scale(0.9);
+        filter: blur(20px);
+    }
+    #div1 p {
+        width: 100%;
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+    }
+    /* div2 特定样式 */
+    #div2 p {
+        width: 100%;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+    }
+    /* 二维码样式 */
+    .qr-image {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        object-fit: contain;
+        border-radius: 10px;
+        background-color: white;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        display: none;
+        opacity: 0;
+        padding: 10px;
+        transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    /* div2 关闭按钮 */
+    #div2 button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+        padding: 0;
+    }
+</style>
+</head>
+<body>
+    <div id="div1">
+        <div class="spinner" id="spinner" style="align-self: center;">
+            <lottie-player src="loadingV4.json" background="transparent" speed="2" style="width:96px;height:96px;" loop autoplay></lottie-player>
+        </div>
+        <p>正在尝试跳转至支付宝</p>
+    </div>
+
+    <div id="div2">
+        <p>或截屏后通过支付宝扫码付款</p>
+        <img class="qr-image" src="cnm1.png" alt="二维码" id="qr-image">
+        <button onclick="reverseAnimateDivs()" style="display: none;">×</button>
+    </div>
+
+<script>
+    function animateIn() {
+        const div1 = document.getElementById('div1');
+        div1.style.opacity = '1';
+        div1.style.transform = 'scale(1)';
+        div1.style.filter = 'blur(0)';
+        setTimeout(animateDivs, 2000);
+    }
+
+
+    function animateDivs() {
+        const div1 = document.getElementById('div1');
+        const div2 = document.getElementById('div2');
+        const qrCode = document.getElementById('qr-image');
+
+        div1.style.transform = 'scale(0.9)';
+        div1.style.filter = 'blur(20px)';
+        div2.style.display = 'flex';
+        setTimeout(() => {
+            div2.style.transform = 'scale(1)';
+            div2.style.opacity = '1';
+            div2.style.filter = 'blur(0)';
+            qrCode.style.display = 'flex';
+            qrCode.style.opacity = '1';
+        }, 100);
+    }
+
+    function reverseAnimateDivs() {
+        const div1 = document.getElementById('div1');
+        const div2 = document.getElementById('div2');
+        const qrCode = document.getElementById('qr-image');
+
+        div1.style.transform = 'scale(1)';
+        div1.style.filter = 'blur(0)';
+
+        div2.style.transform = 'scale(1.1)';
+        div2.style.opacity = '0';
+        div2.style.filter = 'blur(20px)';
+        qrCode.style.opacity = '0';
+
+        setTimeout(() => {
+            div2.style.display = 'none';
+            qrCode.style.display = 'none';
+        }, 300);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const scheme = "alipay://nfc/app?id=10000007&actionType=route&codeContent=https%3A%2F%2Fqr.alipay.com%2Flpx18201ilb21qou7ulrtca%3FnoT%3Dnt00ez51zhjf";
+        location.href = scheme;
+        setTimeout(animateIn, 100);
+    });
+</script>
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</body>
+</html>
